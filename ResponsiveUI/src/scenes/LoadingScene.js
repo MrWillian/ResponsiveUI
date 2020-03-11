@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
-import {View, Image, Text, StyleSheet, Animated} from 'react-native';
+import {View, Image, Text, StyleSheet, Animated, ActivityIndicator } from 'react-native';
 
-//import Logo from '../images/Logo.png';
+import { Actions } from 'react-native-router-flux';
+
+import Logo from '../images/Logo.png';
+
+const switchtoAuth = () => {
+  Actions.replace('auth');
+}
 
 class LoadingScene extends Component {
   state = {
@@ -28,6 +34,8 @@ class LoadingScene extends Component {
       this.setState({
         loadingSpinner: true,
       });
+
+      setTimeout(switchtoAuth, 1200);
     });
   }
 
@@ -43,6 +51,16 @@ class LoadingScene extends Component {
             })
           }}>
           <Image source={Logo} />
+
+          { this.state.loadingSpinner ? <ActivityIndicator style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }} size="large" color="#5257f2" /> : null }
         </Animated.View>
         <Animated.View style={{opacity: this.state.LogoText}}>
           <Text style={styles.logoText}>LogoText</Text>
